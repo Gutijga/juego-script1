@@ -52,24 +52,48 @@ function generarCodigoSala() {
     return Math.random().toString(36).substring(2, 7).toUpperCase();
 }
 
-function crearSala() {
+async function crearSala() {
     let codigoSala = generarCodigoSala();
     let urlSala = `https://juegoscript.netlify.app/ingresarcodigo.html?codigo=${codigoSala}`;
     
     console.log("URL generada para el QR:", urlSala); // Verifica la URL generada
 
-    // Guardar el código de la sala en localStorage
-    localStorage.setItem("codigoSala", codigoSala);
+    try {
+        // Enviar código de la sala al backend
+        let response = await fetch("https://tu-backend.cleverapps.io/api/crearSala", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ codigo: codigoSala })
+        });
 
-    document.getElementById("codigo-sala").innerText = `Código de Sala: ${codigoSala}`;
-    document.getElementById("qr-container").innerHTML = "";
-    new QRCode(document.getElementById("qr-container"), urlSala);
+        let data = await response.json();
+        console.log("Respuesta del backend:", data);
 
-    // Mostrar el botón "Iniciar Juego" debajo del QR
-    const btnIniciar = document.getElementById("iniciarJuego");
-    btnIniciar.style.display = "block";
-    btnIniciar.disabled = false;
+        if (response.ok) {
+            // Guardar el código de la sala en localStorage
+            localStorage.setItem("codigoSala", codigoSala);
+
+            // Mostrar el código en la página
+            document.getElementById("codigo-sala").innerText = `Código de Sala: ${codigoSala}`;
+            document.getElementById("qr-container").innerHTML = "";
+            new QRCode(document.getElementById("qr-container"), urlSala);
+
+            // Mostrar el botón "Iniciar Juego"
+            const btnIniciar = document.getElementById("iniciarJuego");
+            btnIniciar.style.display = "block";
+            btnIniciar.disabled = false;
+        } else {
+            console.error("Error al crear la sala:", data);
+            alert("Error al crear la sala. Inténtalo de nuevo.");
+        }
+    } catch (error) {
+        console.error("Error en la solicitud:", error);
+        alert("Hubo un problema con la conexión al servidor.");
+    }
 }
+
 
 function iniciarJuego() {
     let conteo = 5;
