@@ -7,7 +7,7 @@ const app = express();
 
 // Permitir solo solicitudes desde tu frontend en Netlify
 const corsOptions = {
-  origin: "https://juegoscript.netlify.app", // Reemplaza con la URL de tu frontend
+  origin: "https://juegoscript.netlify.app/frontend/", // Reemplaza con la URL de tu frontend
   methods: "GET,POST",
   allowedHeaders: "Content-Type",
 };
