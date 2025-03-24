@@ -49,7 +49,7 @@ function generarCodigoSala() {
 
 function crearSala() {
     let codigoSala = generarCodigoSala();
-    let urlSala = `https://juegoscript.netlify.app/ingresarcodigo.html${codigoSala}`;
+    let urlSala = `https://juegoscript.netlify.app/ingresarcodigo.html?codigo=${codigoSala}`;
     
     document.getElementById("codigo-sala").innerText = `Código de Sala: ${codigoSala}`;
     document.getElementById("qr-container").innerHTML = "";
