@@ -5,11 +5,11 @@ const cors = require("cors");
 
 const app = express();
 
-// Permitir solo solicitudes desde tu frontend en Netlify
+// Configuración de CORS
 const corsOptions = {
-  origin: "https://juegoscript.netlify.app/frontend/", // Reemplaza con la URL de tu frontend
-  methods: "GET,POST",
-  allowedHeaders: "Content-Type",
+  origin: "https://juegoscript.netlify.app", // Sin "/frontend/"
+  methods: "GET,POST,OPTIONS",
+  allowedHeaders: "Content-Type,Authorization",
 };
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -20,22 +20,27 @@ const db = mysql.createConnection({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
+  ssl: { rejectUnauthorized: true } // Importante para conexiones seguras en Clever Cloud
 });
 
-// Verificar la conexión antes de iniciar el servidor
-db.connect((err) => {
-  if (err) {
-    console.error("❌ Error al conectar la BD:", err);
-    process.exit(1); // Salir si la BD no está conectada
-  } else {
-    console.log("✅ Conectado a la base de datos.");
+// Manejo de errores en la conexión
+function conectarDB() {
+  db.connect((err) => {
+    if (err) {
+      console.error("❌ Error al conectar la BD:", err);
+      setTimeout(conectarDB, 5000); // Intentar reconectar en 5s
+    } else {
+      console.log("✅ Conectado a la base de datos.");
+    }
+  });
+}
 
-    // Iniciar el servidor solo si la BD está conectada
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => {
-      console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
-    });
-  }
+conectarDB(); // Iniciar conexión
+
+// Iniciar servidor
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
 });
 
 // Ruta para guardar el código de la sala
