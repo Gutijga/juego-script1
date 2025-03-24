@@ -51,6 +51,8 @@ function crearSala() {
     let codigoSala = generarCodigoSala();
     let urlSala = `https://juegoscript.netlify.app/ingresarcodigo.html?codigo=${codigoSala}`;
     
+    console.log("URL generada para el QR:", urlSala); // Verifica la URL generada
+
     document.getElementById("codigo-sala").innerText = `Código de Sala: ${codigoSala}`;
     document.getElementById("qr-container").innerHTML = "";
     new QRCode(document.getElementById("qr-container"), urlSala);
