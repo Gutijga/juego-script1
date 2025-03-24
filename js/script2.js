@@ -17,17 +17,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // Validar el código de la sala
     validarCodigoBtn.addEventListener("click", () => {
         console.log("Botón de validar código presionado");
-        const codigo = codigoSalaInput.value.trim();
+        const codigo = codigoSalaInput.value.trim(); // Código ingresado por el usuario
+        const codigoGuardado = localStorage.getItem("codigoSala"); // Código almacenado en localStorage
 
-        if (codigo) {
+        if (codigo && codigo === codigoGuardado) {
             mensaje.textContent = "Código válido. Ahora puedes ingresar tu nombre y seleccionar un personaje.";
             mensaje.style.color = "green";
             datosJugador.style.display = "block"; // Mostrar los campos para el nombre y personaje
             codigoSalaInput.disabled = true; // Deshabilitar el campo del código
             validarCodigoBtn.disabled = true; // Deshabilitar el botón de validación
             document.getElementById("nombreJugador").focus(); // Colocar el cursor en el campo de nombre
-        } else {
+        } else if (codigo) {
             mensaje.textContent = "El código no es válido. Intenta nuevamente.";
+            mensaje.style.color = "red";
+        } else {
+            mensaje.textContent = "Por favor, ingresa un código.";
             mensaje.style.color = "red";
         }
     });
@@ -49,3 +53,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+function crearSala() {
+    let codigoSala = generarCodigoSala();
+    let urlSala = `https://juegoscript.netlify.app/ingresarcodigo.html?codigo=${codigoSala}`;
+    
+    console.log("URL generada para el QR:", urlSala); // Verifica la URL generada
+
+    // Guardar el código de la sala en localStorage
+    localStorage.setItem("codigoSala", codigoSala);
+
+    document.getElementById("codigo-sala").innerText = `Código de Sala: ${codigoSala}`;
+    document.getElementById("qr-container").innerHTML = "";
+    new QRCode(document.getElementById("qr-container"), urlSala);
+
+    // Mostrar el botón "Iniciar Juego" debajo del QR
+    const btnIniciar = document.getElementById("iniciarJuego");
+    btnIniciar.style.display = "block";
+    btnIniciar.disabled = false;
+}
