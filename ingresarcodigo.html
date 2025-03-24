@@ -38,6 +38,16 @@
                 <button type="submit">Unirse a la Sala</button>
             </div>
         </form>
+       <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                // Obtener el código de la sala desde localStorage
+                const codigoSala = localStorage.getItem("codigoSala");
+        
+                if (codigoSala) {
+                    document.getElementById("codigoSala").value = codigoSala;
+                }
+            });
+        </script>
     </div>
     <script src="js/script1.js"></script>
     <script src="js/script2.js" >
