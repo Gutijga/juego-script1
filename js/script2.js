@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 datosJugador.style.display = "block"; // Mostrar los campos para el nombre y personaje
                 codigoSalaInput.disabled = true; // Deshabilitar el campo del código
                 validarCodigoBtn.disabled = true; // Deshabilitar el botón de validación
+                document.getElementById("nombreJugador").focus(); // Colocar el cursor en el campo de nombre
             }
         } else {
             mensaje.textContent = "El código no es válido. Intenta nuevamente.";
