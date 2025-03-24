@@ -14,14 +14,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Configurar conexión a la BD de Clever Cloud
+const fs = require("fs");
+
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  ssl: { rejectUnauthorized: false } // Soluciona el problema de SSL
+  ssl: {
+    ca: fs.readFileSync("./certs/ca.pem"), // Usa el certificado CA
+  },
 });
+
 
 // Manejo de conexión a la BD
 db.connect((err) => {
