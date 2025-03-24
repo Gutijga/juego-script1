@@ -1,5 +1,19 @@
 let jugadores = []; // Array para almacenar los datos de los jugadores
 
+
+
+validarCodigoBtn.addEventListener("click", () => {
+    const codigo = codigoSalaInput.value.trim();
+
+    if (codigo) {
+        localStorage.setItem("codigoSala", codigo); // Guardar en localStorage
+        console.log("Código de sala guardado en localStorage:", codigo);
+    }
+});
+
+
+
+
 function mostrarFormulario() {
     let cantidad = parseInt(document.getElementById("numJugadores").value);
 
