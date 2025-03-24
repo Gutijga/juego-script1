@@ -7,15 +7,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const mensaje = document.getElementById("mensaje");
     const ingresoSalaForm = document.getElementById("ingresoSalaForm");
 
+    // Leer el parámetro 'codigo' de la URL
+    const params = new URLSearchParams(window.location.search);
+    const codigoURL = params.get("codigo");
+
     // Leer el código de la sala desde localStorage
     const codigoGuardado = localStorage.getItem("codigoSala");
 
-    // Insertar automáticamente el código en el campo de entrada si está en localStorage
-    if (codigoGuardado) {
-        codigoSalaInput.value = codigoGuardado; // Usar el código almacenado
+    // Insertar automáticamente el código en el campo de entrada
+    if (codigoURL) {
+        codigoSalaInput.value = codigoURL; // Si el código está en la URL, úsalo
+        console.log(`Código cargado desde la URL: ${codigoURL}`);
+    } else if (codigoGuardado) {
+        codigoSalaInput.value = codigoGuardado; // Si no está en la URL, usa el de localStorage
         console.log(`Código cargado desde localStorage: ${codigoGuardado}`);
     } else {
-        console.log("No se encontró un código en localStorage.");
+        console.log("No se encontró un código en la URL ni en localStorage.");
     }
 
     // Validar el código de la sala
