@@ -58,6 +58,9 @@ function crearSala() {
     
     console.log("URL generada para el QR:", urlSala); // Verifica la URL generada
 
+    // Guardar el código de la sala en localStorage
+    localStorage.setItem("codigoSala", codigoSala);
+
     document.getElementById("codigo-sala").innerText = `Código de Sala: ${codigoSala}`;
     document.getElementById("qr-container").innerHTML = "";
     new QRCode(document.getElementById("qr-container"), urlSala);
@@ -472,6 +475,8 @@ window.addEventListener("resize", () => {
     if (x > window.innerWidth - 50) x = window.innerWidth - 50;
     if (y > window.innerHeight - 50) y = window.innerHeight - 50;
 });
+
+
 
 // Generar puntos al iniciar el juego
 generateDots();
