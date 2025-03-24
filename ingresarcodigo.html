@@ -5,17 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingreso a Sala</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/script2.js" defer>
-        // Leer el parámetro 'codigo' de la URL y colocarlo en el campo de entrada
-        document.addEventListener("DOMContentLoaded", () => {
-            const params = new URLSearchParams(window.location.search);
-            const codigoSala = params.get("codigo");
-
-            if (codigoSala) {
-                document.getElementById("codigoSala").value = codigoSala;
-            }
-        });
-    </script>
+    
 </head>
 <body>
    <div class="contenedor" style="text-align: center; margin: 20px;">
@@ -46,5 +36,16 @@
             </div>
         </form>
     </div>
+<script src="js/script2.js" defer>
+        // Leer el parámetro 'codigo' de la URL y colocarlo en el campo de entrada
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const codigoSala = params.get("codigo");
+
+            if (codigoSala) {
+                document.getElementById("codigoSala").value = codigoSala;
+            }
+        });
+    </script>
 </body>
 </html>
