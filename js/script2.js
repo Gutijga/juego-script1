@@ -7,6 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const mensaje = document.getElementById("mensaje");
     const ingresoSalaForm = document.getElementById("ingresoSalaForm");
 
+    // Leer el parámetro 'codigo' de la URL y colocarlo en el campo de entrada
+    const params = new URLSearchParams(window.location.search);
+    const codigoURL = params.get("codigo");
+    if (codigoURL) {
+        codigoSalaInput.value = codigoURL;
+    }
+
     // Simulación de códigos válidos y sus tiempos de expiración
     const codigosValidos = {
         "ABC123": new Date().getTime() + 60000, // Válido por 1 minuto
