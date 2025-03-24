@@ -4,7 +4,17 @@ const mysql = require("mysql2");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+
+// Configuración de CORS
+const corsOptions = {
+  origin: "https://juegoscript.netlify.app", // Solo permite solicitudes desde Netlify
+  methods: "GET,POST",
+  allowedHeaders: "Content-Type",
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // Permitir preflight
+
 app.use(express.json());
 
 // Configurar conexión a la BD de Clever Cloud
@@ -39,7 +49,7 @@ app.post("/crear-sala", (req, res) => {
 });
 
 // Iniciar el servidor en Clever Cloud
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
 });
