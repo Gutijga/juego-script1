@@ -14,17 +14,14 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-const fs = require("fs");
-
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  ssl: {
-    ca: fs.readFileSync("./certs/ca.pem"), // Usa el certificado CA
-  },
+  ssl: { rejectUnauthorized: true } // Intentar con `true` o `false`
 });
+;
 
 
 // Manejo de conexión a la BD
