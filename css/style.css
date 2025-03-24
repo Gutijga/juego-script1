@@ -1,0 +1,368 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #2F80ED, #56CCF2);
+    color: white;
+    text-align: center;
+}
+.contenedor {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+    z-index: 3;
+}
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    
+    z-index: 3; 
+}
+
+input, button {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+    border: none;
+}
+input {
+    width: 250px;
+    text-align: center;
+}
+button {
+    cursor: pointer;
+    background: #F2C94C;
+    font-weight: bold;
+}
+
+
+.tablero-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tablero {
+    display: none;
+    grid-template-columns: repeat(10, 50px);
+    grid-template-rows: repeat(10, 50px);
+    gap: 2px;
+    border: 5px solid white;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 5px;
+    border-radius: 10px;
+    z-index: 3;
+}
+.celda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    width: 50px;
+    height: 50px;
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+}
+.verde {
+    background-color: green !important;
+}
+.rojo {
+    background-color: red !important;
+}
+#mensaje {
+    display: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+
+.container {
+display: flex;
+gap: 10px;
+z-index: 3;
+justify-content: center; /* Solo centrado horizontal */
+}
+
+
+.ghost {
+    width: 50px;
+    height: 60px;
+    border-radius: 50px 50px 10px 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    Z-index: 3;
+}
+.wave {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 20px;
+    background-color: inherit;
+    display: flex;
+    justify-content: space-between;
+}
+.wave span {
+    width: 20px;
+    height: 20  px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+}
+
+/* Ajuste de cada fantasma con 3 bolas */
+.red .wave span:nth-child(1) { transform: translate3d(-1px, 11px, 0); }
+.red .wave span:nth-child(2) { transform: translate3d(0px, 11px, 0); }
+.red .wave span:nth-child(3) { transform: translate3d(1px, 11px, 0); }
+
+.blue .wave span:nth-child(1) { transform: translate3d(-1px, 11px, 0); }
+.blue .wave span:nth-child(2) { transform: translate3d(0px, 11px, 0); }
+.blue .wave span:nth-child(3) { transform: translate3d(1px, 11px, 0); }
+
+.yellow .wave span:nth-child(1) { transform: translate3d(-1px, 11px, 0); }
+.yellow .wave span:nth-child(2) { transform: translate3d(0px, 11px, 0); }
+.yellow .wave span:nth-child(3) { transform: translate3d(1px, 11px, 0); }
+
+.pink .wave span:nth-child(1) { transform: translate3d(-1px, 11px, 0); }
+.pink .wave span:nth-child(2) { transform: translate3d(0px, 11px, 0); }
+.pink .wave span:nth-child(3) { transform: translate3d(1px, 11px, 0); }
+
+.eye {
+    width: 12px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 20px; /* Ajusta esta propiedad para elevar o bajar los ojos */
+    transition: none; /* Asegúrate de que no haya transición */
+}
+.eye.left { 
+    left: 8px; /* Ajusta esta propiedad para cambiar la distancia entre los ojos */
+}
+.eye.right { 
+    right: 8px; /* Ajusta esta propiedad para cambiar la distancia entre los ojos */
+}
+
+
+
+.eye.left1 { 
+    left: 16px; /* Ajusta esta propiedad para cambiar la distancia entre los ojos */
+    top: 5px; /* Ajusta esta propiedad para elevar o bajar los ojos */
+}
+.eye.right1 { 
+    right: 16px; /* Ajusta esta propiedad para cambiar la distancia entre los ojos */
+    top: 5px; /* Ajusta esta propiedad para elevar o bajar los ojos */
+}
+
+.pupil {
+    width: 6px;
+    height: 8px;
+    background: blue;
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: 3px;
+    transition: none; /* Asegúrate de que no haya transición */
+}
+
+/* Colores de fantasmas */
+.red { background: red; }
+.blue { background: cyan; }
+.yellow { background: orange; }
+.pink { background: pink; }
+
+
+
+
+
+#reiniciarJuego {
+    display: none;
+    position: absolute;
+    bottom: -60px; /* Lo coloca debajo del tablero */
+    right: 0; /* Lo alinea a la derecha */
+    background-color: #ff4757;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0px 4px 10px rgba(255, 71, 87, 0.5);
+    z-index: 3;
+}
+#reiniciarJuego:hover {
+    background-color: #e84118;
+    transform: scale(1.1);
+}
+#reiniciarJuego:active {
+    transform: scale(0.9);
+}
+
+.seleccion-muneco {
+display: flex;
+gap: 10px;
+justify-content: center;
+margin-top: 10px;
+
+}
+
+.muneco-label {
+display: flex;
+flex-direction: column;
+align-items: center;
+cursor: pointer;
+}
+
+.muneco-label input {
+display: none;      
+}
+
+.muneco-label input:checked + .ghost {
+border: 3px solid white;
+transform: scale(1.1);
+}
+
+
+
+/* Estilos para Pac-Man */
+.pacman {
+width: 20px;
+height: 20px;
+background: yellow;
+border-radius: 50%;
+position: absolute;
+clip-path: polygon(2050% 0%, 50% 50%, 100% 70%, 0% 200%, 0% 0%);
+animation: eat 0.4s infinite;
+visibility: visible;
+z-index: 3;
+}
+
+/* Ojo de Pac-Man */
+.pacman-eye {
+width: 4px;
+height: 4px;
+background: black;
+border-radius: 50%;
+position: absolute;
+top: 4px;
+left: 9px;
+}
+
+/* Estilos para los puntos (comida de Pac-Man) */
+.dot {
+width: 5px;
+height: 5px;
+background: gold;
+border-radius: 50%;
+position: absolute;
+}
+
+
+#jugadoresSeleccionados {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+
+.jugador-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.muñeco {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+
+
+
+
+
+
+
+/* Animación para el movimiento de la boca */
+@keyframes eat {
+0%, 100% {
+    clip-path: polygon(2050% 0%, 50% 50%, 1200% 70%, 0% 300%, 0% 0%);
+}
+50% {
+    clip-path: polygon(150% 0%, 50% 50%, 100% 70%, 0% 200%, 0% 0%);
+}
+}
+
+/* Animación de explosión cuando Pac-Man se come todos los puntos */
+@keyframes explode {
+0% { transform: scale(1); opacity: 1; }
+50% { transform: scale(2); opacity: 0.5; }
+100% { transform: scale(3); opacity: 0; }
+}
+
+
+
+
+/* ========================
+Diseño responsive
+======================== */
+
+/* Para tablets y pantallas medianas */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5em; /* Reduce el tamaño del título en tablets y pantallas medianas. */
+    }
+
+    header nav ul {
+        flex-direction: column; /* Apila los enlaces del menú verticalmente en lugar de en una fila. */
+        gap: 10px; /* Disminuye el espacio entre enlaces para ajustarse mejor al tamaño de pantalla. */
+    }
+
+    section h2 {
+        font-size: 2em; /* Reduce ligeramente el tamaño de los títulos en secciones para mejor legibilidad. */
+    }
+}
+
+/* Para móviles y pantallas pequeñas */
+@media (max-width: 480px) {
+    header {
+        padding: 10px; /* Reduce el espacio interno del encabezado para optimizar el espacio disponible. */
+    }
+
+    header h1 {
+        font-size: 1.2em; /* Reduce el tamaño del título aún más para pantallas más pequeñas. */
+    }
+
+    section {
+        padding: 40px 10px; /* Ajusta el relleno de las secciones para aprovechar mejor el espacio. */
+    }
+
+    .form-container {
+        padding: 15px; /* Disminuye el espacio interno del formulario para que sea más compacto en móviles. */
+        max-width: 100%; /* Asegura que el formulario ocupe todo el ancho de la pantalla en móviles. */
+    }
+
+    footer {
+        font-size: 0.8em; /* Reduce el tamaño del texto en el pie de página para pantallas pequeñas. */
+    }
+}

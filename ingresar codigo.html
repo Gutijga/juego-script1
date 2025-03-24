@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso a Sala</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script2.js" defer>
+       
+    </script>
+</head>
+<body>
+    <div class="contenedor" style="text-align: center; margin: 20px;">
+        <h1>Ingreso a Sala</h1>
+        <form id="ingresoSalaForm">
+            <div id="codigoContainer">
+                <label for="codigoSala">Código de la Sala:</label>
+                <input type="text" id="codigoSala" required>
+                <button type="button" id="validarCodigo">Validar Código</button>
+            </div>
+            <p id="mensaje" style="margin-top: 20px;"></p>
+            <div id="datosJugador" style="display: none;">
+                <div>
+                    <label for="nombreJugador">Nombre del Jugador:</label>
+                    <input type="text" id="nombreJugador" required>
+                </div>
+                <div>
+                    <label for="personaje">Selecciona tu Personaje:</label>
+                    <select id="personaje" required>
+                        <option value="pacman">Pacman</option>
+                        <option value="fantasmaRojo">Fantasma Rojo</option>
+                        <option value="fantasmaAzul">Fantasma Azul</option>
+                        <option value="fantasmaAmarillo">Fantasma Amarillo</option>
+                        <option value="fantasmaRosa">Fantasma Rosa</option>
+                    </select>
+                </div>
+                <button type="submit">Unirse a la Sala</button>
+            </div>
+        </form>
+        <p id="mensaje" style="margin-top: 20px;"></p>
+    </div>
+</body>
+</html>
