@@ -20,11 +20,11 @@ function mostrarFormulario() {
 
     // Creación dinámica de los campos de entrada para nombres y selección de muñecos
     for (let i = 1; i <= cantidad; i++) {
-        form.innerHTML += <label>Jugador ${i}:</label>
+        form.innerHTML += `<label>Jugador ${i}:</label>
                             <input type="text" id="jugador${i}" oninput="validarTexto(this)" required><br>
 
                             <div class="seleccion-muneco">
-                                ${['red', 'blue', 'yellow', 'pink'].map(color => 
+                                ${['red', 'blue', 'yellow', 'pink'].map(color => `
                                     <label class="muneco-label">
                                         <input type="radio" name="muneco${i}" value="${color}" required>
                                         <div class="ghost ${color}">
@@ -35,8 +35,8 @@ function mostrarFormulario() {
                                             </div>
                                         </div>
                                     </label>
-                                ).join('')}
-                            </div>;
+                                `).join('')}
+                            </div>`;
     }
 
     form.innerHTML += <br><button onclick="iniciarJuego(${cantidad})">Iniciar Juego</button>;
