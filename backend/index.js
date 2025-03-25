@@ -5,12 +5,15 @@ const cors = require("cors");
 
 const app = express();
 
-// 🔹 Configurar CORS manualmente
+// 🔹 Configurar CORS para permitir solicitudes desde Netlify
+app.use(cors({ origin: "https://juegoscript.netlify.app", credentials: true }));
+
+// 🔹 Configurar headers CORS manualmente
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "https://juegoscript.netlify.app");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
-  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   next();
 });
 
@@ -41,14 +44,17 @@ app.get("/", (req, res) => {
 app.post("/crear-sala", (req, res) => {
   const { codigo_sala } = req.body;
 
+  if (!codigo_sala) {
+    return res.status(400).json({ error: "El código de sala es obligatorio" });
+  }
+
   const query = "INSERT INTO salas (codigo) VALUES (?)";
   db.query(query, [codigo_sala], (err) => {
     if (err) {
       console.error("❌ Error al insertar en la BD:", err);
-      res.status(500).send("Error en el servidor");
-    } else {
-      res.status(200).send("✅ Sala creada correctamente");
+      return res.status(500).json({ error: "Error en el servidor" });
     }
+    res.status(200).json({ mensaje: "✅ Sala creada correctamente" });
   });
 });
 
