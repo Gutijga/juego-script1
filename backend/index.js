@@ -5,19 +5,18 @@ const cors = require("cors");
 
 const app = express();
 
-// Configuración de CORS
-const corsOptions = {
-  origin: "https://juegoscript.netlify.app", // Solo permite solicitudes desde Netlify
-  methods: "GET,POST",
-  allowedHeaders: "Content-Type",
-};
+// 🔹 Configurar CORS manualmente
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://juegoscript.netlify.app");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
 
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // Permitir preflight
+app.use(express.json()); // Middleware para procesar JSON
 
-app.use(express.json());
-
-// Configurar conexión a la BD de Clever Cloud
+// 🔹 Configurar conexión a la BD de Clever Cloud
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -33,7 +32,12 @@ db.connect((err) => {
   }
 });
 
-// Ruta para guardar el código de la sala
+// 🔹 Ruta principal para comprobar que el servidor está activo
+app.get("/", (req, res) => {
+  res.send("🚀 Servidor funcionando correctamente");
+});
+
+// 🔹 Ruta para crear una sala en la base de datos
 app.post("/crear-sala", (req, res) => {
   const { codigo_sala } = req.body;
 
@@ -48,7 +52,7 @@ app.post("/crear-sala", (req, res) => {
   });
 });
 
-// Iniciar el servidor en Clever Cloud
+// 🔹 Iniciar el servidor en Clever Cloud
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en el puerto ${PORT}`);
