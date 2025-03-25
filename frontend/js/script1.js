@@ -39,7 +39,7 @@ function mostrarFormulario() {
                             </div>`;
     }
 
-    form.innerHTML += <br><button onclick="iniciarJuego(${cantidad})">Iniciar Juego</button>;
+    form.innerHTML += `<br><button onclick="iniciarJuego(${cantidad})">Iniciar Juego</button>`;
     form.style.display = "block";
 }
 
@@ -54,16 +54,16 @@ function generarCodigoSala() {
 
 async function crearSala() {
     let codigoSala = generarCodigoSala();
-    let urlSala = https://juegoscript.netlify.app/frontend/ingresarcodigo.html?codigo=${codigoSala};
+    let urlSala = `https://juegoscript.netlify.app/frontend/ingresarcodigo.html?codigo=${codigoSala}`;
     
     console.log("URL generada para el QR:", urlSala); // Verifica la URL generada
-    console.log("1")
+
     try {
         // Enviar código de la sala al backend
-        let response = await fetch("https://console.clever-cloud.com/users/me/applications/app_e52f1e4d-2eb3-4fd7-8507-8a86fa0e0a67", {
+        let response = await fetch("https://app-e52f1e4d-2eb3-4fd7-8507-8a86fa0e0a67.cleverapps.io/crear-sala", {
             method: "POST",
             headers: {
-                "Content-Type": application/json
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({ codigo: codigoSala })
         });
@@ -76,7 +76,7 @@ async function crearSala() {
             localStorage.setItem("codigoSala", codigoSala);
 
             // Mostrar el código en la página
-            document.getElementById("codigo-sala").innerText = Código de Sala: ${codigoSala};
+            document.getElementById("codigo-sala").innerText = `Código de Sala: ${codigoSala}`;
             document.getElementById("qr-container").innerHTML = "";
             new QRCode(document.getElementById("qr-container"), urlSala);
 
@@ -88,7 +88,6 @@ async function crearSala() {
             console.error("Error al crear la sala:", data);
             alert("Error al crear la sala. Inténtalo de nuevo.");
         }
-        console.log("2 afuera")
     } catch (error) {
         console.error("Error en la solicitud:", error);
         alert("Hubo un problema con la conexión al servidor.");
@@ -103,7 +102,7 @@ function iniciarJuego() {
     botonIniciar.disabled = true;
 
     const intervalo = setInterval(() => {
-        conteoElemento.innerText = El juego comienza en: ${conteo}...;
+        conteoElemento.innerText = `El juego comienza en: ${conteo}...`;
         conteo--;
 
         if (conteo < 0) {
@@ -166,8 +165,8 @@ function mostrarMuñecos() {
         const offsetX = distanciaDesdeElBorde + (direccion * index * espacioEntreMunecos); 
         
         // Aplica las posiciones calculadas - MISMA ALTURA para todos
-        jugadorDiv.style.left = ${celdaRect.left + offsetX}px; 
-        jugadorDiv.style.top = ${alturaFija}px; 
+        jugadorDiv.style.left = `${celdaRect.left + offsetX}px`; 
+        jugadorDiv.style.top = `${alturaFija}px`; 
         
         // Ajusta el tamaño del muñeco
         jugadorDiv.style.width = '30px'; 
@@ -218,8 +217,8 @@ function mostrarMuñecos() {
         tooltip.style.transition = 'opacity 0.3s'; // Transición suave
         
         // Posicionar el tooltip ENCIMA del muñeco
-        tooltip.style.left = ${celdaRect.left + offsetX - 10}px; // Centrado con el muñeco
-        tooltip.style.top = ${alturaFija - 30}px; // Encima del muñeco
+        tooltip.style.left = `${celdaRect.left + offsetX - 10}px`; // Centrado con el muñeco
+        tooltip.style.top = `${alturaFija - 30}px`; // Encima del muñeco
         tooltip.style.textAlign = 'center';
         
         // Agregar eventos para mostrar y ocultar el tooltip
@@ -242,7 +241,7 @@ function mostrarMuñecos() {
         document.body.appendChild(tooltip);
         
         // Añadir un log para depuración
-        console.log(Jugador ${jugador.nombre} posicionado en: left=${jugadorDiv.style.left}, top=${jugadorDiv.style.top});
+        console.log(`Jugador ${jugador.nombre} posicionado en: left=${jugadorDiv.style.left}, top=${jugadorDiv.style.top}`);
     });
 }
 
@@ -284,7 +283,7 @@ function generarTablero() {
             let celda = document.createElement('div');
             celda.classList.add('celda');
             celda.textContent = num;
-            celda.setAttribute('id', celda-${num});
+            celda.setAttribute('id', `celda-${num}`);
 
             // Agregar un div para representar al jugador en su posición inicial
             let jugadorEnPosicion = jugadores.find(j => j.posicion === num);
@@ -326,7 +325,7 @@ function mostrarJugadores() {
         let jugadorDiv = document.createElement("div");
         jugadorDiv.classList.add("jugador-info");
 
-        jugadorDiv.innerHTML = 
+        jugadorDiv.innerHTML = `
             <div class="ghost ${jugador.color}">
                 <div class="eye left"><div class="pupil"></div></div>
                 <div class="eye right"><div class="pupil"></div></div>
@@ -335,7 +334,7 @@ function mostrarJugadores() {
                 </div>
             </div>
             <span style="color: ${jugador.color}; font-weight: bold;">${jugador.nombre}</span>
-        ;
+        `;
 
         contenedorJugadores.appendChild(jugadorDiv);
     });
@@ -362,17 +361,17 @@ function pintarCeldas() {
     let cantidadRojas = Math.floor(Math.random() * 8) + 1;
 
     let celdasRojas = obtenerNumerosAleatorios(cantidadRojas, 71, 99, ocupados);
-    celdasRojas.forEach(num => document.getElementById(celda-${num}).classList.add('rojo'));
+    celdasRojas.forEach(num => document.getElementById(`celda-${num}`).classList.add('rojo'));
 
     let celdasVerdes = obtenerNumerosAleatorios(cantidadVerdes, 2, 30, ocupados);
-    celdasVerdes.forEach(num => document.getElementById(celda-${num}).classList.add('verde'));
+    celdasVerdes.forEach(num => document.getElementById(`celda-${num}`).classList.add('verde'));
 
     let cantidadCentro = Math.floor(Math.random() * 5) + 1;
     let celdasCentro = obtenerNumerosAleatorios(cantidadCentro, 31, 70, ocupados);
     
     celdasCentro.forEach(num => {
         let color = Math.random() < 0.5 ? 'verde' : 'rojo';
-        document.getElementById(celda-${num}).classList.add(color);
+        document.getElementById(`celda-${num}`).classList.add(color);
     });
 }
 
@@ -455,9 +454,9 @@ function movePacman() {
     if (y <= 0 || y >= maxY) speedY *= -1;
 
     // Aplicar transformaciones CSS para mover y reflejar a Pac-Man
-    pacman.style.left = ${x}px;
-    pacman.style.top = ${y}px;
-    pacman.style.transform = scaleX(${speedX > 0 ? 1 : -1});
+    pacman.style.left = `${x}px`;
+    pacman.style.top = `${y}px`;
+    pacman.style.transform = `scaleX(${speedX > 0 ? 1 : -1})`;
     pacman.style.transition = eating ? 'transform 0.3s ease' : 'none'; // Simular pausa al comer
 
     // Llamar a la función en el siguiente frame
