@@ -60,7 +60,7 @@ async function crearSala() {
 
     try {
         // Enviar código de la sala al backend
-        let response = await fetch("https://juegoscript.netlify.app/api/crearSala", {
+        let response = await fetch ("https://juegoscript.netlify.app/api/crearSala", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
