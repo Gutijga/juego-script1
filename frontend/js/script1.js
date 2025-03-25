@@ -57,17 +57,14 @@ async function crearSala() {
     let urlSala = `https://juegoscript.netlify.app/frontend/ingresarcodigo.html?codigo=${codigoSala}`;
     
     console.log("URL generada para el QR:", urlSala); // Verifica la URL generada
-    console.log("1")
     try {
         // Enviar código de la sala al backend
         let response = await fetch("https://console.clever-cloud.com/users/me/applications/app_e52f1e4d-2eb3-4fd7-8507-8a86fa0e0a67", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
-                console.log("opcion 1")
             },
             body: JSON.stringify({ codigo: codigoSala })
-            console.log("opcion 2 adentro del enlace")
         });
 
         let data = await response.json();
