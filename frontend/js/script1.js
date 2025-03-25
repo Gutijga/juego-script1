@@ -59,7 +59,7 @@ async function crearSala() {
     console.log("URL generada para el QR:", urlSala); // Verifica la URL generada
     try {
         // Enviar código de la sala al backend
-        let response = await fetch("https://juegoscript.clever-cloud.com/api/crearSala", {
+        let response = await fetch("https://api.clever-cloud.com/v2/github/redeploy", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
