@@ -88,6 +88,7 @@ async function crearSala() {
             console.error("Error al crear la sala:", data);
             alert("Error al crear la sala. Inténtalo de nuevo.");
         }
+        console.log("2 afuera")
     } catch (error) {
         console.error("Error en la solicitud:", error);
         alert("Hubo un problema con la conexión al servidor.");
