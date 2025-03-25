@@ -56,11 +56,11 @@ async function crearSala() {
     let codigoSala = generarCodigoSala();
     let urlSala = `https://juegoscript.netlify.app/frontend/ingresarcodigo.html?codigo=${codigoSala}`;
     
-    console.log("URL generada para el QR:", urlSala); // Verifica la URL generada
-
+    console.log("URL generada para el QR:", urlSala);
+    console.log("1");
     try {
         // Enviar código de la sala al backend
-        let response = await fetch("https://app-e52f1e4d-2eb3-4fd7-8507-8a86fa0e0a67.cleverapps.io/crear-sala", {
+        let response = await fetch("https://console.clever-cloud.com/users/me/applications/app_e52f1e4d-2eb3-4fd7-8507-8a86fa0e0a67", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -88,11 +88,13 @@ async function crearSala() {
             console.error("Error al crear la sala:", data);
             alert("Error al crear la sala. Inténtalo de nuevo.");
         }
+        console.log("2 afuera");
     } catch (error) {
         console.error("Error en la solicitud:", error);
         alert("Hubo un problema con la conexión al servidor.");
     }
 }
+
 
 
 function iniciarJuego() {
