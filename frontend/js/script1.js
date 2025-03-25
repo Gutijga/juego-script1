@@ -60,7 +60,7 @@ async function crearSala() {
 
     try {
         // Enviar código de la sala al backend
-        let response = await fetch("https://app-e52f1e4d-2eb3-4fd7-8507-8a86fa0e0a67.cleverapps.io/", {
+        let response = await fetch("https://api.clever-cloud.com/v2/github/redeploy", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
