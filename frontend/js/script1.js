@@ -60,7 +60,7 @@ async function crearSala() {
 
     try {
         // Enviar código de la sala al backend
-        let response = await fetch("https://juegoscript.clever-cloud.com/api/crearSala", {
+        let response = await fetch("https://api.clever-cloud.com/v2/github/redeploy", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
