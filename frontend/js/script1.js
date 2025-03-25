@@ -83,14 +83,12 @@ async function crearSala() {
             const btnIniciar = document.getElementById("iniciarJuego");
             btnIniciar.style.display = "block";
             btnIniciar.disabled = false;
-            console.log("dentro del if")
         } else {
             console.error("Error al crear la sala:", data);
             alert("Error al crear la sala. Inténtalo de nuevo.");
         }
         
     } catch (error) {
-        console.log("2 afuera")
         console.error("Error en la solicitud:", error);
         alert("Hubo un problema con la conexión al servidor.");
     }
