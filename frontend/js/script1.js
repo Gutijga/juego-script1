@@ -53,47 +53,39 @@ function generarCodigoSala() {
 }
 
 async function crearSala() {
-    let codigoSala = generarCodigoSala();
-    let urlSala = `https://juegoscript.netlify.app/frontend/ingresarcodigo.html?codigo=${codigoSala}`;
+    let codigoSala = generarCodigo(); // Función que genera el código de la sala
     
-    console.log("URL generada para el QR:", urlSala);
-    console.log("1");
     try {
-        // Enviar código de la sala al backend
         let response = await fetch("https://api.clever-cloud.com/v2/github/redeploy", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": "Bearer TU_TOKEN_AQUI" // Agrega el token si la API lo requiere
             },
-            body: JSON.stringify({ codigo: codigoSala })
+            body: JSON.stringify({
+                codigo: codigoSala,
+                usuario: "nombreDeUsuario", // Ajusta según lo que necesite el backend
+                otraClave: "valorOpcional"
+            })
         });
-
-        let data = await response.json();
-        console.log("Respuesta del backend:", data);
-
-        if (response.ok) {
-            // Guardar el código de la sala en localStorage
-            localStorage.setItem("codigoSala", codigoSala);
-
-            // Mostrar el código en la página
-            document.getElementById("codigo-sala").innerText = `Código de Sala: ${codigoSala}`;
-            document.getElementById("qr-container").innerHTML = "";
-            new QRCode(document.getElementById("qr-container"), urlSala);
-
-            // Mostrar el botón "Iniciar Juego"
-            const btnIniciar = document.getElementById("iniciarJuego");
-            btnIniciar.style.display = "block";
-            btnIniciar.disabled = false;
-        } else {
-            console.error("Error al crear la sala:", data);
-            alert("Error al crear la sala. Inténtalo de nuevo.");
+        
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
-        console.log("2 afuera");
+        
+        let data = await response.json();
+        console.log("Sala creada con éxito:", data);
+        
     } catch (error) {
-        console.error("Error en la solicitud:", error);
-        alert("Hubo un problema con la conexión al servidor.");
+        console.error("Error al crear la sala:", error.message);
     }
 }
+
+function generarCodigo() {
+    return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+
 
 
 
